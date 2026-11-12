@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clínica Dental Diente Feliz</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="login" id="login">
+    <div class="login-card">
+      <div class="login-brand"><span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M7.2 4.2c1.6-1 3.3-.6 4.8.1 1.5-.7 3.2-1.1 4.8-.1 2 1.2 2.3 3.9 1.3 6.2-.8 1.8-1.3 3.5-1.7 5.7-.3 1.8-.8 4-2.1 4-.9 0-1.1-1.5-1.4-3-.2-1.1-.5-2.2-.9-2.2s-.7 1.1-.9 2.2c-.3 1.5-.5 3-1.4 3-1.3 0-1.8-2.2-2.1-4-.4-2.2-.9-3.9-1.7-5.7-1-2.3-.7-5 1.3-6.2Z"/></svg>
+        </span><span>Diente Feliz</span></div>
+      <h1>Bienvenido/a</h1>
+      <p class="login-sub">Ingresa con tu cuenta de la clínica para continuar.</p>
+      <form id="loginForm" novalidate>
+        <label for="loginUser">Usuario o correo</label>
+        <input id="loginUser" type="text" autocomplete="username" placeholder="nombre@dientefeliz.cl" aria-describedby="loginError" required />
+        <label for="loginPass">Contraseña</label>
+        <input id="loginPass" type="password" autocomplete="current-password" placeholder="••••••••" aria-describedby="loginError" required />
+        <div class="form-error" id="loginError" role="alert" aria-live="assertive"></div>
+        <button class="cta" type="submit">Iniciar sesión</button>
+      </form>
+    </div>
+  </div>
+  <div class="app-shell locked" id="appShell" data-view="home">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M7.2 4.2c1.6-1 3.3-.6 4.8.1 1.5-.7 3.2-1.1 4.8-.1 2 1.2 2.3 3.9 1.3 6.2-.8 1.8-1.3 3.5-1.7 5.7-.3 1.8-.8 4-2.1 4-.9 0-1.1-1.5-1.4-3-.2-1.1-.5-2.2-.9-2.2s-.7 1.1-.9 2.2c-.3 1.5-.5 3-1.4 3-1.3 0-1.8-2.2-2.1-4-.4-2.2-.9-3.9-1.7-5.7-1-2.3-.7-5 1.3-6.2Z"/></svg>
+        </span>
+        <span>Diente Feliz</span>
+      </div>
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav-item" data-view="home"><span class="nav-icon" aria-hidden="true">⌂</span><span>Inicio</span></button>
+        <button class="nav-item" data-view="agenda">
+          <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M7.5 3.5v3M16.5 3.5v3M3.5 9.5h17M8 13h3M8 16.5h5"/></svg></span>
+          <span>Agenda</span>
+        </button>
+        <button class="nav-item active" data-view="patients">
+          <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.5-3.2 2.3-4.8 5.5-4.8s5 1.6 5.5 4.8M16 7.2a3 3 0 0 1 0 5.8M16 15c2.4.3 3.8 1.6 4.5 4"/></svg></span>
+          <span>Pacientes</span>
+        </button>
+        <button class="nav-item" data-view="record">
+          <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20V5a1.5 1.5 0 0 1 1-1.5Z"/><path d="M14 3.8V8h4M9 12h6M9 15.5h6M9 19h3"/></svg></span>
+          <span>Ficha clínica</span>
+        </button>
+        <button class="nav-item" data-view="payments">
+          <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10.5h18M7 15h3"/></svg></span>
+          <span>Presupuestos y pagos</span>
+        </button>
+        <button class="nav-item" data-view="dashboard"><span class="nav-icon" aria-hidden="true">▦</span><span>Dashboard</span></button>
+        <button class="nav-item" data-view="reports"><span class="nav-icon" aria-hidden="true">▤</span><span>Reportes</span></button>
+        <button class="nav-item" data-view="users"><span class="nav-icon" aria-hidden="true">♙</span><span>Usuarios</span></button>
+        <button class="nav-item" data-view="doctors"><span class="nav-icon" aria-hidden="true">✚</span><span>Doctores y horarios</span></button>
+        <button class="nav-item" data-view="branches"><span class="nav-icon" aria-hidden="true">⌖</span><span>Sucursales</span></button>
+        <button class="nav-item" data-view="boxes"><span class="nav-icon" aria-hidden="true">▣</span><span>Box</span></button>
+        <button class="nav-item" data-view="agreements"><span class="nav-icon" aria-hidden="true">◇</span><span>Convenios</span></button>
+        <button class="nav-item" data-view="fees"><span class="nav-icon" aria-hidden="true">$</span><span>Aranceles</span></button>
+        <button class="nav-item" data-view="audit"><span class="nav-icon" aria-hidden="true">◷</span><span>Auditoría</span></button>
+      </nav>
+      <div class="nav-spacer"></div>
+      <button class="sidebar-footer" id="logoutBtn" type="button">Cerrar sesión</button>
+    </aside>
+
+    <main class="page">
+      <header class="topbar">
+        <h1 id="viewTitle">Agenda</h1>
+        <div class="search-box topbar-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+          <input id="globalRut" type="text" placeholder="Buscar paciente por RUT" autocomplete="off" aria-label="Buscar paciente por RUT" />
+          <div class="search-results" id="globalResults" hidden></div>
+        </div>
+        <div class="user-chip"><span class="avatar" id="userAvatar">RC</span><div><strong id="userName">Recepción</strong><small>Recepcionista</small></div></div>
+      </header>
+
+      <section class="record-card card" data-section="patients" aria-label="Pacientes">
+        <div class="header">Pacientes registrados</div>
+        <div class="body">
+          <div class="search-row">
+            <div class="search-box"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+              <input id="rutSearch" type="text" placeholder="Buscar por RUT (ej. 12.345.678-5)" autocomplete="off" aria-label="Buscar por RUT" />
+            </div>
+            <span class="result-count" id="patientCount"></span>
+            <button class="btn-ghost" id="exportPatients" type="button">Exportar fichas Excel</button>
+          </div>
+          <div class="pay-table-wrap">
+            <table class="pay-table">
+              <thead><tr><th>Paciente</th><th>RUT</th><th>Profesional</th><th>Alergia</th><th></th></tr></thead>
+              <tbody id="patientRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="schedule-card card" data-section="agenda" id="agenda-panel" aria-label="Agenda de citas">
+        <div class="schedule-header">
+          <div class="schedule-date" id="agendaDate">Cargando fecha...</div>
+          <div class="hdr-actions">
+            <select id="agendaBranchFilter" aria-label="Filtrar por sucursal"><option value="">Todas las sucursales</option></select>
+            <select id="agendaDoctorFilter" aria-label="Filtrar por profesional"><option value="">Todos los profesionales</option></select>
+            <span class="today-label" id="agendaTodayLabel">Hoy</span>
+            <button class="cta cta-inline" id="newApptBtn" type="button">+ Nueva cita</button>
+          </div>
+        </div>
+        <div class="week-strip" id="weekStrip" role="group" aria-label="Seleccionar día de agenda"></div>
+        <div class="agenda-grid">
+          <div class="time-column">
+            <div class="time-label">09:00</div>
+            <div class="time-label">10:00</div>
+            <div class="time-label">11:00</div>
+            <div class="time-label">12:00</div>
+            <div class="time-label">13:00</div>
+            <div class="time-label">14:00</div>
+            <div class="time-label">15:00</div>
+          </div>
+
+          <div class="day-grid" id="agendaGrid"></div>
+        </div>
+      </section>
+
+      <section class="record-card card" data-section="record" aria-label="Listado de fichas clínicas">
+        <div class="header">Fichas clínicas · Todos los pacientes</div>
+        <div class="body">
+          <div class="search-row">
+            <div class="search-box"><input id="clinicalRutSearch" type="text" placeholder="Buscar ficha por RUT" aria-label="Buscar ficha clínica por RUT" /></div>
+            <span class="result-count" id="clinicalPatientCount"></span>
+          </div>
+          <div class="pay-table-wrap">
+            <table class="pay-table">
+              <thead><tr><th>Paciente</th><th>RUT</th><th>Contacto</th><th>Profesional</th><th>Alergias</th><th></th></tr></thead>
+              <tbody id="clinicalPatientRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="record-card card" data-section="record" id="patients-panel">
+        <div class="header">Ficha clínica y odontograma</div>
+        <div class="body">
+          <h2 class="record-title">Ficha clínica · <span id="recordName">Camila Rojas</span></h2>
+          <p class="record-meta" id="recordMeta">RUT 12.345.678-5 · Alergia: penicilina</p>
+
+          <div class="tabs" role="tablist" aria-label="Secciones del paciente">
+            <button class="tab-button active" data-tab="odontograma" role="tab" aria-selected="true">Odontograma</button>
+            <button class="tab-button" data-tab="antecedentes" role="tab" aria-selected="false">Antecedentes</button>
+            <button class="tab-button" data-tab="rayos" role="tab" aria-selected="false">Rayos X</button>
+            <button class="tab-button" data-tab="consentimientos" role="tab" aria-selected="false">Consentimientos</button>
+          </div>
+
+          <div class="tab-panels">
+            <div class="panel active" id="panel-odontograma">
+              <h3 class="panel-title">Odontograma interactivo</h3>
+              <div class="odontogram" id="odontogram"></div>
+              <div class="odo-legend" aria-label="Leyenda del odontograma">
+                <span><i style="background:#f6f1e6"></i>Sano</span>
+                <span><i style="background:#8ea4b0"></i>Obturado</span>
+                <span><i style="background:#c0453a"></i>Endodoncia</span>
+                <span><i style="background:#4a2a1a"></i>Caries</span>
+                <span><i style="background:#f2b632"></i>Observación</span>
+                <span><i style="background:transparent;border-style:dashed"></i>Ausente</span>
+              </div>
+              <div class="tooth-detail" id="toothDetail" aria-live="polite">
+                Selecciona un diente para ver su número FDI y estado.
+              </div>
+            </div>
+
+            <div class="panel" id="panel-antecedentes">
+              <h3 class="panel-title">Antecedentes relevantes</h3>
+              <div class="list">
+                <div class="list-item">Alergia a penicilina: leve, se reporta en historia clínica.</div>
+                <div class="list-item">No presenta bruxismo ni hábitos parafuncionales.</div>
+                <div class="list-item">Última limpieza profesional: hace 6 meses.</div>
+              </div>
+            </div>
+
+            <div class="panel" id="panel-rayos">
+              <h3 class="panel-title">Rayos X</h3>
+              <div class="list">
+                <div class="list-item">Radiografía panorámica: sin alteraciones de impacto significativo.</div>
+                <div class="list-item">Periapical 14-16: leve reabsorción apical leve en 15.</div>
+                <div class="list-item">Revisión programada en 6 meses.</div>
+              </div>
+            </div>
+
+            <div class="panel" id="panel-consentimientos">
+              <h3 class="panel-title">Consentimientos</h3>
+              <div class="list">
+                <div class="list-item">Consentimiento informado para tratamiento de conducto.</div>
+                <div class="list-item">Autorización para fotografías intraorales.</div>
+                <div class="list-item">Convenio de pago aceptado por paciente.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="record-card card" data-section="record" id="clinical-panel">
+        <div class="header">Ficha clínica del paciente</div>
+        <div class="body">
+          <h2 class="record-title">Resumen clínico · <span id="clinicalPatientName">Camila Rojas</span></h2>
+          <p class="record-meta" id="clinicalPatientMeta">Datos personales y próxima atención.</p>
+          <div class="contact-summary" id="patientContact"></div>
+          <div class="record-actions"><button class="btn-ghost" id="exportPatient" type="button">Exportar ficha</button></div>
+          <div class="list">
+            <div class="list-item"><strong>Profesional:</strong> <span id="clinicalDoctor">Dr. Soto</span></div>
+            <div class="list-item"><strong>Procedimiento:</strong> <span id="clinicalProcedure">Limpieza</span></div>
+            <div class="list-item"><strong>Alergias registradas:</strong> <span id="clinicalAllergy">penicilina</span></div>
+          </div>
+          <h3 class="panel-title history-title">Historial de citas y tratamientos</h3>
+          <div class="pay-table-wrap">
+            <table class="pay-table">
+              <thead><tr><th>Fecha</th><th>Hora</th><th>Profesional</th><th>Procedimiento</th><th>Sucursal / Box</th><th>Estado</th></tr></thead>
+              <tbody id="patientHistoryRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="record-card card" data-section="payments" id="payments-panel" aria-label="Visualizador de pagos">
+        <div class="header">Visualizador de pagos</div>
+        <div class="body">
+          <h2 class="record-title">Pagos · <span id="payPatientName">Camila Rojas</span></h2>
+          <p class="record-meta" id="payMeta">Tratamiento y convenio.</p>
+
+          <div class="pay-summary">
+            <div class="pay-stat"><span class="pay-label">Total del tratamiento</span><strong id="payTotal">$0</strong></div>
+            <div class="pay-stat"><span class="pay-label" id="payDiscountLabel">Convenio</span><strong id="payDiscount">$0</strong></div>
+            <div class="pay-stat"><span class="pay-label">Abonado</span><strong id="payPaid">$0</strong></div>
+            <div class="pay-stat pay-stat-balance"><span class="pay-label">Saldo pendiente</span><strong id="payBalance">$0</strong></div>
+          </div>
+
+          <div class="pay-progress-wrap">
+            <div class="pay-progress-head"><span id="payStatusChip" class="chip">Estado</span><span id="payProgressText">0 % pagado</span></div>
+            <div class="pay-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="payProgress">
+              <div class="pay-progress-fill" id="payProgressFill"></div>
+            </div>
+          </div>
+
+          <h3 class="panel-title">Historial de abonos</h3>
+          <div class="pay-table-wrap">
+            <table class="pay-table">
+              <thead><tr><th>Fecha</th><th>Concepto</th><th>Medio de pago</th><th class="num">Monto</th></tr></thead>
+              <tbody id="payRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <section class="record-card card" data-section="payments" aria-label="Arancel de tratamientos">
+        <div class="header">Arancel de tratamientos</div>
+        <div class="body">
+          <div class="pay-table-wrap">
+            <table class="pay-table">
+              <thead><tr><th>Tratamiento</th><th class="num">Valor</th></tr></thead>
+              <tbody id="priceRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="record-card card" data-section="home">
+        <div class="header">Inicio · Clínica Diente Feliz</div>
+        <div class="body">
+          <h2 class="record-title">Buenos días, <span id="homeUser">Recepción</span></h2>
+          <p class="record-meta">Resumen de la clínica y accesos rápidos para el equipo.</p>
+          <div class="metric-grid">
+            <div class="metric-card"><span>Citas de hoy</span><strong id="homeAppointments">0</strong><small>Agenda del día</small></div>
+            <div class="metric-card"><span>Pacientes registrados</span><strong id="homePatients">0</strong><small>Fichas clínicas</small></div>
+            <div class="metric-card"><span>Profesionales</span><strong>3</strong><small>En atención</small></div>
+          </div>
+          <div class="quick-actions"><button class="cta" type="button" data-open-appointment>+ Agendar una cita</button><button class="btn-ghost" type="button" data-go="patients">Buscar paciente</button><button class="btn-ghost" type="button" data-go="reports">Ver reportes</button></div>
+          <h3 class="panel-title">Próximas atenciones</h3>
+          <div class="pay-table-wrap"><table class="pay-table"><thead><tr><th>Hora</th><th>Paciente</th><th>Profesional</th><th>Procedimiento</th></tr></thead><tbody id="homeUpcomingRows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="record-card card" data-section="dashboard">
+        <div class="header">Dashboard · Indicadores</div>
+        <div class="body">
+          <p class="record-meta">Vista general de actividad (datos de demostración).</p>
+          <div class="metric-grid">
+            <div class="metric-card"><span>Citas registradas</span><strong id="dashboardAppointments">0</strong><small>En la agenda</small></div>
+            <div class="metric-card"><span>Pacientes</span><strong id="dashboardPatients">0</strong><small>Activos en el sistema</small></div>
+            <div class="metric-card"><span>Recaudación registrada</span><strong>$273.000</strong><small>Pagos de ejemplo</small></div>
+            <div class="metric-card"><span>Ocupación</span><strong>76%</strong><small>Promedio de boxes</small></div>
+          </div>
+          <h3 class="panel-title">Actividad de la semana</h3>
+          <div class="weekly-bars" aria-label="Citas por día"><span style="--bar:48%"><i>Lun</i></span><span style="--bar:72%"><i>Mar</i></span><span style="--bar:60%"><i>Mié</i></span><span style="--bar:88%"><i>Jue</i></span><span style="--bar:68%"><i>Vie</i></span><span style="--bar:34%"><i>Sáb</i></span></div>
+        </div>
+      </section>
+
+      <section class="record-card card" data-section="reports">
+        <div class="header">Reportes</div>
+        <div class="body">
+          <div class="section-toolbar"><div><h2 class="record-title">Reportes de pacientes y atenciones</h2><p class="record-meta">Consulta el historial de citas y exporta fichas individuales o el listado completo.</p></div><button class="cta" id="exportReport" type="button">Exportar fichas Excel</button></div>
+          <div class="search-row"><div class="search-box"><input id="reportRut" type="text" placeholder="Filtrar por RUT" aria-label="Filtrar reporte por RUT" /></div><span class="result-count" id="reportCount"></span></div>
+          <div class="pay-table-wrap"><table class="pay-table"><thead><tr><th>Paciente</th><th>RUT</th><th>Contacto</th><th>Citas</th><th>Último tratamiento</th><th></th></tr></thead><tbody id="reportRows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="record-card card" data-section="users"><div class="header">Usuarios</div><div class="body"><div class="section-toolbar"><div><h2 class="record-title">Usuarios del sistema</h2><p class="record-meta">Perfiles y permisos de acceso.</p></div><button class="cta" type="button" data-demo-action="usuario">+ Nuevo usuario</button></div><div class="pay-table-wrap"><table class="pay-table"><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th></tr></thead><tbody><tr><td>Recepción</td><td>recepcion@dientefeliz.cl</td><td>Recepcionista</td><td><span class="status-pill">Activo</span></td></tr><tr><td>Administración</td><td>admin@dientefeliz.cl</td><td>Administrador</td><td><span class="status-pill">Activo</span></td></tr><tr><td>Equipo clínico</td><td>clinica@dientefeliz.cl</td><td>Profesional</td><td><span class="status-pill">Activo</span></td></tr></tbody></table></div></div></section>
+
+      <section class="record-card card" data-section="doctors"><div class="header">Doctores y horarios</div><div class="body"><h2 class="record-title">Profesionales</h2><p class="record-meta">Especialidad, sucursal asignada y disponibilidad según horario de atención de cada sucursal.</p><div class="pay-table-wrap"><table class="pay-table"><thead><tr><th>Profesional</th><th>Especialidad</th><th>Sucursal</th><th>Horario</th></tr></thead><tbody id="doctorRows"></tbody></table></div></div></section>
+
+      <section class="record-card card" data-section="branches"><div class="header">Sucursales · Temuco</div><div class="body"><h2 class="record-title">Sucursales de atención en Temuco</h2><p class="record-meta">Administra los días y horas de atención. Los cambios se reflejan al agendar nuevas citas.</p><div class="management-grid" id="branchCards"></div></div></section>
+
+      <section class="record-card card" data-section="boxes"><div class="header">Box</div><div class="body"><h2 class="record-title">Boxes disponibles</h2><p class="record-meta">Cada box es un espacio físico de atención independiente. La sucursal indica dónde está ubicado; el equipamiento y la disponibilidad corresponden a ese box.</p><div class="pay-table-wrap"><table class="pay-table"><thead><tr><th>Box</th><th>Sucursal</th><th>Equipamiento</th><th>Estado</th><th></th></tr></thead><tbody id="boxRows"></tbody></table></div></div></section>
+
+      <section class="record-card card" data-section="agreements"><div class="header">Convenios</div><div class="body"><h2 class="record-title">Convenios vigentes</h2><div class="pay-table-wrap"><table class="pay-table"><thead><tr><th>Convenio</th><th>Descuento</th><th>Vigencia</th><th>Estado</th></tr></thead><tbody><tr><td>Convenio Fonasa</td><td>20%</td><td>Indefinida</td><td><span class="status-pill">Vigente</span></td></tr><tr><td>Convenio institucional</td><td>15%</td><td>31 dic 2026</td><td><span class="status-pill">Vigente</span></td></tr></tbody></table></div></div></section>
+
+      <section class="record-card card" data-section="fees"><div class="header">Aranceles</div><div class="body"><h2 class="record-title">Arancel de tratamientos</h2><p class="record-meta">Valores referenciales en pesos chilenos.</p><div class="pay-table-wrap"><table class="pay-table"><thead><tr><th>Tratamiento</th><th class="num">Valor</th></tr></thead><tbody id="feeRows"></tbody></table></div></div></section>
+
+      <section class="record-card card" data-section="audit"><div class="header">Auditoría</div><div class="body"><h2 class="record-title">Registro de actividad</h2><p class="record-meta">Actividad reciente del sistema de demostración.</p><div class="pay-table-wrap"><table class="pay-table"><thead><tr><th>Fecha y hora</th><th>Usuario</th><th>Acción</th><th>Detalle</th></tr></thead><tbody><tr><td>Hoy · 10:42</td><td>Recepción</td><td>Agenda</td><td>Consulta de agenda diaria</td></tr><tr><td>Hoy · 10:18</td><td>Administración</td><td>Pagos</td><td>Revisión de abonos registrados</td></tr><tr><td>Ayer · 16:05</td><td>Recepción</td><td>Pacientes</td><td>Consulta de ficha clínica</td></tr></tbody></table></div></div></section>
+    </main>
+
+    <aside class="side-panel">
+      <div class="side-title">Detalle de la cita</div>
+      <div class="doctor-card">
+        <div class="eyebrow">Profesional</div>
+        <div class="name" id="detailDoctor">Dr. Soto</div>
+        <div class="patient-line"><span class="eyebrow inline">Paciente</span> <span id="detailPatient">Matías González</span></div>
+      </div>
+
+      <div class="mini-block">
+        <label>Box</label>
+        <div class="value"><span id="detailBox">Box 2</span></div>
+      </div>
+
+      <div class="mini-block">
+        <label>Duración</label>
+        <div class="value"><span id="detailDuration">30 minutos</span></div>
+        <p class="detail-note" id="detailDurationReason">—</p>
+      </div>
+
+      <div class="mini-block">
+        <label>Valor del tratamiento</label>
+        <div class="value"><span id="detailPrice">—</span></div>
+      </div>
+
+      <div class="mini-block">
+        <label>Horario</label>
+        <div class="value">
+          <span id="detailSchedule">10:30 – 11:00</span>
+          <span class="chip green" id="detailStatus">Sin cruces</span>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button class="btn-ghost" id="sideRecord" type="button">Ver ficha</button>
+        <button class="cta" id="sidePay" type="button">Ver pagos</button>
+      </div>
+      <div class="button-row appointment-actions">
+        <button class="btn-ghost" id="editAppointment" type="button">Modificar cita</button>
+        <button class="btn-ghost danger-button" id="deleteAppointment" type="button">Eliminar cita</button>
+      </div>
+    </aside>
+  </div>
+
+  <div class="modal-backdrop" id="apptModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="apptTitle">
+      <div class="modal-head"><h2 id="apptTitle">Nueva cita</h2><button class="icon-btn" type="button" data-close aria-label="Cerrar">×</button></div>
+      <form id="apptForm" novalidate>
+        <div class="form-grid">
+          <div class="field full"><label for="apptRut">Paciente (RUT)</label>
+            <input id="apptRut" type="text" placeholder="Ej. 12.345.678-5" autocomplete="off" />
+            <div class="hint" id="apptHint">Ingresa el RUT para buscar al paciente.</div></div>
+          <div class="field"><label for="apptFirstName">Nombre</label><input id="apptFirstName" type="text" placeholder="Nombre del paciente" /></div>
+          <div class="field"><label for="apptLastName">Apellido</label><input id="apptLastName" type="text" placeholder="Apellido del paciente" /></div>
+          <div class="field"><label for="apptPhone">Teléfono</label><input id="apptPhone" type="tel" placeholder="+56 9 1234 5678" /></div>
+          <div class="field"><label for="apptEmail">Correo electrónico</label><input id="apptEmail" type="email" placeholder="paciente@correo.cl" /></div>
+          <div class="field"><label for="apptBranch">Sucursal</label><select id="apptBranch"></select></div>
+          <div class="field"><label for="apptDoctor">Profesional</label><select id="apptDoctor"></select></div>
+          <div class="field"><label for="apptBox">Box</label><select id="apptBox"></select></div>
+          <div class="field"><label for="apptDate">Fecha</label><input id="apptDate" type="date" required /></div>
+          <div class="field"><label for="apptTime">Hora</label><select id="apptTime"></select></div>
+          <div class="field"><label for="apptProc">Procedimiento</label><select id="apptProc"></select></div>
+          <div class="field"><label for="apptDur">Duración</label><select id="apptDur"></select></div>
+          <div class="field full"><div class="cost-box" id="apptCost" aria-live="polite"></div></div>
+        </div>
+        <div class="form-error" id="apptError" role="alert"></div>
+        <div class="modal-foot"><button class="btn-ghost" type="button" data-close>Cancelar</button><button class="cta" id="apptSubmit" type="submit">Agendar cita</button></div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-backdrop" id="equipmentModal" hidden>
+    <div class="modal equipment-modal" role="dialog" aria-modal="true" aria-labelledby="equipmentTitle">
+      <div class="modal-head"><h2 id="equipmentTitle">Equipo del box</h2><button class="icon-btn" type="button" data-equipment-close aria-label="Cerrar">×</button></div>
+      <p class="record-meta" id="equipmentBranch"></p>
+      <ul class="equipment-list" id="equipmentList"></ul>
+      <div class="modal-foot"><button class="btn-ghost" type="button" data-equipment-close>Cerrar</button></div>
+    </div>
+  </div>
+  <div class="modal-backdrop confirmation-backdrop" id="confirmationModal" hidden>
+    <div class="confirmation-dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirmationTitle" aria-describedby="confirmationMessage">
+      <div class="confirmation-icon" aria-hidden="true">!</div>
+      <h2 id="confirmationTitle">Confirmar acción</h2>
+      <p id="confirmationMessage"></p>
+      <div class="confirmation-actions">
+        <button class="btn-ghost" id="cancelConfirmation" type="button">Cancelar</button>
+        <button class="confirmation-submit danger" id="confirmAction" type="button">Eliminar</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
