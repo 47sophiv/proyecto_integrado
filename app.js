@@ -1808,25 +1808,136 @@
 
     function renderDashboard() {
       const count = Object.keys(patients).length;
-      const todayCount = appointments.filter(item => item.dayOffset === state.selectedDayOffset).length;
+      const todayAppointments = appointments.filter(item => item.dayOffset === 0)
+        .sort((a, b) => a.startMinutes - b.startMinutes);
+      const todayCount = todayAppointments.length;
+      const completedCount = completedVisits.length;
+      const paymentEntries = Object.values(paymentsByPatient)
+        .flatMap(info => Array.isArray(info.payments) ? info.payments : [])
+        .filter(payment => Number.isFinite(payment.amount) && payment.amount >= 0);
+      const collectedTotal = paymentEntries.reduce((total, payment) => total + payment.amount, 0);
       $('homeAppointments').textContent = String(todayCount);
       $('homePatients').textContent = String(count);
-      $('dashboardAppointments').textContent = String(appointments.length);
+      $('homeDate').textContent = new Intl.DateTimeFormat('es-CL', { dateStyle: 'long' }).format(getAgendaDate(0));
+      $('dashboardDate').textContent = new Intl.DateTimeFormat('es-CL', { dateStyle: 'full' }).format(new Date());
+      $('dashboardTodayAppointments').textContent = String(todayCount);
+      $('dashboardTodayCaption').textContent = todayCount === 1 ? 'cita en agenda' : 'citas en agenda';
       $('dashboardPatients').textContent = String(count);
+      $('dashboardCompletedVisits').textContent = String(completedCount);
+      $('dashboardCollected').textContent = formatCLP(collectedTotal);
+      $('dashboardPaymentCount').textContent = `${paymentEntries.length} ${paymentEntries.length === 1 ? 'movimiento' : 'movimientos'}`;
       $('homeUser').textContent = $('userName').textContent;
+
       const upcomingRows = $('homeUpcomingRows');
-      upcomingRows.innerHTML = '';
-      appointments.filter(item => item.dayOffset === state.selectedDayOffset)
-        .sort((a, b) => a.startMinutes - b.startMinutes).slice(0, 5).forEach(item => {
+      upcomingRows.replaceChildren();
+      todayAppointments.slice(0, 5).forEach(item => {
+        const row = document.createElement('tr');
+        [item.time, item.patient, item.doctor, item.procedure].forEach(value => {
+          const cell = document.createElement('td');
+          cell.textContent = value;
+          row.appendChild(cell);
+        });
+        upcomingRows.appendChild(row);
+      });
+      if (!upcomingRows.children.length) upcomingRows.innerHTML = '<tr><td class="pay-empty" colspan="4">No hay citas registradas para hoy.</td></tr>';
+
+      const weekCounts = Array.from({ length: 7 }, (_, dayOffset) =>
+        appointments.filter(item => item.dayOffset === dayOffset).length
+      );
+      const maxWeekCount = Math.max(1, ...weekCounts);
+      const weekChart = $('dashboardWeekChart');
+      weekChart.replaceChildren();
+      weekCounts.forEach((dayCount, dayOffset) => {
+        const date = getAgendaDate(dayOffset);
+        const day = document.createElement('div');
+        day.className = 'dashboard-chart-day';
+        day.setAttribute('aria-label', `${new Intl.DateTimeFormat('es-CL', { weekday: 'long', day: 'numeric', month: 'long' }).format(date)}: ${dayCount} ${dayCount === 1 ? 'cita' : 'citas'}`);
+
+        const countLabel = document.createElement('strong');
+        countLabel.className = 'dashboard-chart-count';
+        countLabel.textContent = String(dayCount);
+
+        const track = document.createElement('div');
+        track.className = 'dashboard-chart-track';
+        const bar = document.createElement('span');
+        bar.className = 'dashboard-chart-bar';
+        bar.style.height = `${dayCount ? Math.max(8, Math.round(dayCount / maxWeekCount * 100)) : 0}%`;
+        track.appendChild(bar);
+
+        const dayLabel = document.createElement('span');
+        dayLabel.className = 'dashboard-chart-label';
+        dayLabel.textContent = new Intl.DateTimeFormat('es-CL', { weekday: 'short' }).format(date).replace('.', '');
+        const dateLabel = document.createElement('small');
+        dateLabel.textContent = new Intl.DateTimeFormat('es-CL', { day: 'numeric', month: 'short' }).format(date).replace('.', '');
+        day.append(countLabel, track, dayLabel, dateLabel);
+        weekChart.appendChild(day);
+      });
+
+      const procedures = new Map();
+      [...completedVisits, ...appointments].forEach(item => {
+        const procedure = String(item.procedure || '').trim();
+        if (procedure) procedures.set(procedure, (procedures.get(procedure) || 0) + 1);
+      });
+      const topProcedures = [...procedures.entries()]
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'es'))
+        .slice(0, 5);
+      const procedureList = $('dashboardProcedureList');
+      procedureList.replaceChildren();
+      if (!topProcedures.length) {
+        const empty = document.createElement('p');
+        empty.className = 'dashboard-empty';
+        empty.textContent = 'Aún no hay procedimientos registrados.';
+        procedureList.appendChild(empty);
+      } else {
+        const maxProcedureCount = topProcedures[0][1];
+        topProcedures.forEach(([name, procedureCount]) => {
+          const item = document.createElement('div');
+          item.className = 'dashboard-procedure-item';
+          const heading = document.createElement('div');
+          heading.className = 'dashboard-procedure-heading';
+          const label = document.createElement('span');
+          label.textContent = name;
+          const total = document.createElement('strong');
+          total.textContent = String(procedureCount);
+          heading.append(label, total);
+          const track = document.createElement('div');
+          track.className = 'dashboard-procedure-track';
+          const bar = document.createElement('span');
+          bar.style.width = `${Math.round(procedureCount / maxProcedureCount * 100)}%`;
+          track.appendChild(bar);
+          item.append(heading, track);
+          procedureList.appendChild(item);
+        });
+      }
+
+      const currentTime = new Date();
+      const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+      const upcomingAppointments = appointments.filter(item =>
+        item.dayOffset > 0 || (item.dayOffset === 0 && item.startMinutes >= currentMinutes)
+      )
+        .sort((a, b) => a.dayOffset - b.dayOffset || a.startMinutes - b.startMinutes)
+      const upcoming = upcomingAppointments.slice(0, 6);
+      $('dashboardUpcomingCaption').textContent = upcomingAppointments.length
+        ? `Mostrando ${upcoming.length} de ${upcomingAppointments.length} próximas citas`
+        : 'No hay próximas citas registradas';
+      const dashboardRows = $('dashboardUpcomingRows');
+      dashboardRows.replaceChildren();
+      if (!upcoming.length) {
+        dashboardRows.innerHTML = '<tr><td class="pay-empty" colspan="4">No hay próximas citas registradas.</td></tr>';
+      } else {
+        upcoming.forEach(item => {
           const row = document.createElement('tr');
-          [item.time, item.patient, item.doctor, item.procedure].forEach(value => {
+          const dateCell = document.createElement('td');
+          const appointmentDate = getAgendaDate(item.dayOffset);
+          dateCell.textContent = `${new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: 'short' }).format(appointmentDate).replace('.', '')} · ${item.time}`;
+          [dateCell, ...[item.patient, item.doctor, item.procedure].map(value => {
             const cell = document.createElement('td');
             cell.textContent = value;
-            row.appendChild(cell);
-          });
-          upcomingRows.appendChild(row);
+            return cell;
+          })].forEach(cell => row.appendChild(cell));
+          dashboardRows.appendChild(row);
         });
-      if (!upcomingRows.children.length) upcomingRows.innerHTML = '<tr><td class="pay-empty" colspan="4">No hay citas para el día seleccionado.</td></tr>';
+      }
     }
 
     function renderReportRows() {
@@ -2238,52 +2349,16 @@
       showToast(`${editingAppointment ? 'Cita modificada' : 'Cita agendada'}: ${name} · ${item.time} · ${doctor} · ${box}`);
     }
 
-    function logout() {
-      $('appShell').classList.add('locked');
-      $('login').hidden = false;
-      $('loginPass').value = '';
-      $('loginUser').focus();
-    }
-
-    $('loginForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const userInput = $('loginUser');
-      const passwordInput = $('loginPass');
-      const user = userInput.value.trim();
-      const password = passwordInput.value.trim();
-      const missingFields = [];
-      if (!user) missingFields.push('usuario o correo');
-      if (!password) missingFields.push('contraseña');
-      if (missingFields.length) {
-        $('loginError').textContent = `Por favor, completa ${missingFields.join(' y ')} para continuar.`;
-        $('loginError').classList.add('is-visible');
-        userInput.setAttribute('aria-invalid', String(!user));
-        passwordInput.setAttribute('aria-invalid', String(!password));
-        (user ? passwordInput : userInput).focus();
-        return;
+    async function logout() {
+      try {
+        const response = await fetch('/api/logout', { method: 'POST' });
+        if (!response.ok) throw new Error(`El servidor respondió ${response.status}.`);
+        window.location.replace('/login');
+      } catch (error) {
+        console.error('No se pudo cerrar la sesión.', error);
+        showToast('No se pudo cerrar la sesión. Inténtalo nuevamente.');
       }
-      $('loginError').textContent = '';
-      $('loginError').classList.remove('is-visible');
-      userInput.setAttribute('aria-invalid', 'false');
-      passwordInput.setAttribute('aria-invalid', 'false');
-      const nick = user.split('@')[0];
-      $('userName').textContent = nick.charAt(0).toUpperCase() + nick.slice(1);
-      $('userAvatar').textContent = nick.slice(0, 2).toUpperCase();
-      $('login').hidden = true;
-      $('appShell').classList.remove('locked');
-      renderDashboard();
-      showView('home');
-    });
-    ['loginUser', 'loginPass'].forEach((id) => {
-      $(id).addEventListener('input', () => {
-        const input = $(id);
-        if (input.value.trim()) input.setAttribute('aria-invalid', 'false');
-        if ($('loginUser').value.trim() && $('loginPass').value.trim()) {
-          $('loginError').textContent = '';
-          $('loginError').classList.remove('is-visible');
-        }
-      });
-    });
+    }
     $('logoutBtn').addEventListener('click', logout);
     $('newApptBtn').addEventListener('click', () => openApptModal());
     $('editAppointment').addEventListener('click', () => {
@@ -2536,7 +2611,20 @@
       if (!$('consentProcedure').value || !$('consentAccepted').checked || !state.signatureDrawn) {
         return $('consentError').textContent = 'Completa el procedimiento, la aceptación y la firma antes de imprimir.';
       }
+      const patient = patients[state.selectedPatient];
+      if (!patient) return $('consentError').textContent = 'No se encontró la ficha del paciente para imprimir el consentimiento.';
       $('consentError').textContent = '';
+      $('consentPrintDate').textContent = new Intl.DateTimeFormat('es-CL', {
+        dateStyle: 'long',
+        timeStyle: 'short'
+      }).format(new Date());
+      $('consentPrintPatient').textContent = state.selectedPatient;
+      $('consentPrintRut').textContent = patient.rut;
+      $('consentPrintDoctor').textContent = patient.doctor || 'No registrado';
+      $('consentPrintProcedure').textContent = $('consentProcedure').value;
+      $('consentPrintInformation').textContent = consentProcedureInformation[$('consentProcedure').value];
+      $('consentPrintSignatureName').textContent = state.selectedPatient;
+      $('consentPrintSignature').src = signatureCanvas.toDataURL('image/png');
       window.print();
     });
     $('agendaBranchFilter').addEventListener('change', (e) => { state.branchFilter = e.target.value; initAgenda(); });

@@ -7,24 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="login" id="login">
-    <div class="login-card">
-      <div class="login-brand"><span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M7.2 4.2c1.6-1 3.3-.6 4.8.1 1.5-.7 3.2-1.1 4.8-.1 2 1.2 2.3 3.9 1.3 6.2-.8 1.8-1.3 3.5-1.7 5.7-.3 1.8-.8 4-2.1 4-.9 0-1.1-1.5-1.4-3-.2-1.1-.5-2.2-.9-2.2s-.7 1.1-.9 2.2c-.3 1.5-.5 3-1.4 3-1.3 0-1.8-2.2-2.1-4-.4-2.2-.9-3.9-1.7-5.7-1-2.3-.7-5 1.3-6.2Z"/><path d="M9 10.5h.1m5.8 0h.1M9.5 13.2c1.4 1.2 3.6 1.2 5 0" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/><path d="M19.2 1.5v3m-1.5-1.5h3" stroke="#f2b632" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </span><span>Diente Feliz</span></div>
-      <h1>Bienvenido/a</h1>
-      <p class="login-sub">Ingresa con tu cuenta de la clínica para continuar.</p>
-      <form id="loginForm" novalidate>
-        <label for="loginUser">Usuario o correo</label>
-        <input id="loginUser" type="text" autocomplete="username" placeholder="nombre@dientefeliz.cl" aria-describedby="loginError" required />
-        <label for="loginPass">Contraseña</label>
-        <input id="loginPass" type="password" autocomplete="current-password" placeholder="••••••••" aria-describedby="loginError" required />
-        <div class="form-error" id="loginError" role="alert" aria-live="assertive"></div>
-        <button class="cta" type="submit">Iniciar sesión</button>
-      </form>
-    </div>
-  </div>
-  <div class="app-shell locked" id="appShell" data-view="home">
+  <div class="app-shell" id="appShell" data-view="home">
     <aside class="sidebar">
       <div class="brand">
         <span class="brand-mark" aria-hidden="true">
@@ -241,6 +224,49 @@
               </div>
             </div>
           </div>
+          <section class="consent-print-document" id="consentPrintDocument" aria-label="Consentimiento informado para impresión" hidden>
+            <header class="consent-print-header">
+              <div class="consent-print-brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7.2 4.2c1.6-1 3.3-.6 4.8.1 1.5-.7 3.2-1.1 4.8-.1 2 1.2 2.3 3.9 1.3 6.2-.8 1.8-1.3 3.5-1.7 5.7-.3 1.8-.8 4-2.1 4-.9 0-1.1-1.5-1.4-3-.2-1.1-.5-2.2-.9-2.2s-.7 1.1-.9 2.2c-.3 1.5-.5 3-1.4 3-1.3 0-1.8-2.2-2.1-4-.4-2.2-.9-3.9-1.7-5.7-1-2.3-.7-5 1.3-6.2Z"/><path d="M9 10.5h.1m5.8 0h.1M9.5 13.2c1.4 1.2 3.6 1.2 5 0" style="stroke:currentColor;stroke-width:1.25;stroke-linecap:round"/><path d="M19.2 1.5v3m-1.5-1.5h3" style="stroke:#f2b632;stroke-width:1.5;stroke-linecap:round"/></svg></span><div><strong>Clínica Dental Diente Feliz</strong><small>Documento clínico · Consentimiento informado</small></div></div>
+              <div class="consent-print-date"><span>Fecha de emisión</span><strong id="consentPrintDate"></strong></div>
+            </header>
+            <div class="consent-print-title">
+              <span>Autorización de atención</span>
+              <h1>Consentimiento informado odontológico</h1>
+              <p>Información del procedimiento y autorización voluntaria del paciente.</p>
+            </div>
+            <section class="consent-print-patient" aria-label="Identificación">
+              <div><span>Paciente</span><strong id="consentPrintPatient"></strong></div>
+              <div><span>RUT</span><strong id="consentPrintRut"></strong></div>
+              <div><span>Profesional tratante</span><strong id="consentPrintDoctor"></strong></div>
+            </section>
+            <section class="consent-print-section consent-print-procedure">
+              <h2><span>01</span> Procedimiento e información entregada</h2>
+              <h3 id="consentPrintProcedure"></h3>
+              <p id="consentPrintInformation"></p>
+            </section>
+            <section class="consent-print-section">
+              <h2><span>02</span> Declaración y autorización</h2>
+              <p>Declaro que recibí información comprensible sobre el procedimiento descrito, sus beneficios, riesgos y alternativas. Tuve la oportunidad de hacer preguntas y recibí respuesta a mis consultas. Comprendo que puedo solicitar aclaraciones antes de la atención y otorgo mi autorización de forma libre y voluntaria.</p>
+            </section>
+            <section class="consent-print-privacy">
+              <h2>Protección de datos personales</h2>
+              <p>Los antecedentes de salud contenidos en la ficha clínica son datos personales sensibles. Su tratamiento debe sujetarse a la normativa chilena aplicable, incluida la Ley N.º 19.628 sobre protección de la vida privada y la Ley N.º 21.719, que regula la protección y el tratamiento de los datos personales y crea la Agencia de Protección de Datos Personales. La Ley N.º 21.719 fue publicada el 13 de diciembre de 2024 y su entrada en vigor está prevista para el 1 de diciembre de 2026.</p>
+              <p>Esta referencia informa sobre el marco legal y no reemplaza la entrega de información sobre privacidad ni constituye por sí sola una autorización independiente para tratar datos personales.</p>
+              <div class="consent-print-sources">
+                <span>Fuentes oficiales:</span>
+                <a href="https://www.bcn.cl/leychile/navegar?idNorma=141599">Ley N.º 19.628 · Biblioteca del Congreso Nacional</a>
+                <a href="https://www.bcn.cl/leychile/navegar?idNorma=1209272">Ley N.º 21.719 · Biblioteca del Congreso Nacional</a>
+              </div>
+            </section>
+            <footer class="consent-print-signature">
+              <div class="consent-print-signed">
+                <img id="consentPrintSignature" alt="Firma digital del paciente">
+                <strong id="consentPrintSignatureName"></strong>
+                <span>Firma del paciente</span>
+              </div>
+              <p>La información es general. El profesional debe resolver las dudas y explicar los riesgos, beneficios y alternativas específicos de cada caso antes de realizar el procedimiento.</p>
+            </footer>
+          </section>
         </div>
       </section>
 
@@ -320,26 +346,57 @@
           <div class="metric-grid">
             <div class="metric-card"><span>Citas de hoy</span><strong id="homeAppointments">0</strong><small>Agenda del día</small></div>
             <div class="metric-card"><span>Pacientes registrados</span><strong id="homePatients">0</strong><small>Fichas clínicas</small></div>
-            <div class="metric-card"><span>Profesionales</span><strong>3</strong><small>En atención</small></div>
           </div>
           <div class="quick-actions"><button class="cta" type="button" data-open-appointment>+ Agendar una cita</button><button class="btn-ghost" type="button" data-go="patients">Buscar paciente</button><button class="btn-ghost" type="button" data-go="reports">Ver reportes</button></div>
-          <h3 class="panel-title">Próximas atenciones</h3>
+          <h3 class="panel-title">Atenciones de hoy · <span id="homeDate"></span></h3>
           <div class="pay-table-wrap"><table class="pay-table"><thead><tr><th>Hora</th><th>Paciente</th><th>Profesional</th><th>Procedimiento</th></tr></thead><tbody id="homeUpcomingRows"></tbody></table></div>
         </div>
       </section>
 
       <section class="record-card card" data-section="dashboard">
-        <div class="header">Dashboard · Indicadores</div>
+        <div class="header">Panel de gestión · Indicadores</div>
         <div class="body">
-          <p class="record-meta">Vista general de actividad (datos de demostración).</p>
-          <div class="metric-grid">
-            <div class="metric-card"><span>Citas registradas</span><strong id="dashboardAppointments">0</strong><small>En la agenda</small></div>
-            <div class="metric-card"><span>Pacientes</span><strong id="dashboardPatients">0</strong><small>Activos en el sistema</small></div>
-            <div class="metric-card"><span>Recaudación registrada</span><strong>$273.000</strong><small>Pagos de ejemplo</small></div>
-            <div class="metric-card"><span>Ocupación</span><strong>76%</strong><small>Promedio de boxes</small></div>
+          <div class="dashboard-heading">
+            <div>
+              <h2 class="record-title">Resumen de actividad</h2>
+              <p class="record-meta">Indicadores calculados desde las fichas, la agenda y los registros disponibles.</p>
+            </div>
+            <span class="dashboard-date" id="dashboardDate"></span>
           </div>
-          <h3 class="panel-title">Actividad de la semana</h3>
-          <div class="weekly-bars" aria-label="Citas por día"><span style="--bar:48%"><i>Lun</i></span><span style="--bar:72%"><i>Mar</i></span><span style="--bar:60%"><i>Mié</i></span><span style="--bar:88%"><i>Jue</i></span><span style="--bar:68%"><i>Vie</i></span><span style="--bar:34%"><i>Sáb</i></span></div>
+          <div class="metric-grid dashboard-metrics">
+            <div class="metric-card"><span>Citas de hoy</span><strong id="dashboardTodayAppointments">0</strong><small id="dashboardTodayCaption">En agenda</small></div>
+            <div class="metric-card"><span>Pacientes registrados</span><strong id="dashboardPatients">0</strong><small>Fichas disponibles</small></div>
+            <div class="metric-card"><span>Atenciones realizadas</span><strong id="dashboardCompletedVisits">0</strong><small>En el historial clínico</small></div>
+            <div class="metric-card"><span>Abonos registrados</span><strong id="dashboardCollected">$0</strong><small id="dashboardPaymentCount">0 movimientos</small></div>
+          </div>
+          <div class="dashboard-content-grid">
+            <section class="dashboard-panel" aria-labelledby="dashboardWeekTitle">
+              <div class="dashboard-panel-heading">
+                <div><h3 id="dashboardWeekTitle">Agenda de los próximos 7 días</h3><p>Distribución de citas registradas por día.</p></div>
+                <span class="dashboard-legend"><i></i> Citas</span>
+              </div>
+              <div class="dashboard-week-chart" id="dashboardWeekChart" role="img" aria-label="Citas registradas por día durante los próximos siete días"></div>
+            </section>
+            <section class="dashboard-panel dashboard-procedures" aria-labelledby="dashboardProceduresTitle">
+              <div class="dashboard-panel-heading">
+                <div><h3 id="dashboardProceduresTitle">Procedimientos frecuentes</h3><p>Según agenda e historial registrado.</p></div>
+              </div>
+              <div class="dashboard-procedure-list" id="dashboardProcedureList"></div>
+            </section>
+          </div>
+          <section class="dashboard-panel dashboard-appointments" aria-labelledby="dashboardUpcomingTitle">
+            <div class="dashboard-panel-heading">
+              <div><h3 id="dashboardUpcomingTitle">Próximas atenciones</h3><p id="dashboardUpcomingCaption">Agenda de los próximos días.</p></div>
+              <button class="btn-ghost" type="button" data-go="agenda">Abrir agenda</button>
+            </div>
+            <div class="pay-table-wrap">
+              <table class="pay-table">
+                <thead><tr><th>Fecha y hora</th><th>Paciente</th><th>Profesional</th><th>Procedimiento</th></tr></thead>
+                <tbody id="dashboardUpcomingRows"></tbody>
+              </table>
+            </div>
+          </section>
+          <p class="dashboard-disclaimer">Los importes y recuentos reflejan únicamente los datos registrados en esta aplicación.</p>
         </div>
       </section>
 
